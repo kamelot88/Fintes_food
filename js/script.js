@@ -96,5 +96,43 @@ updateClock();
 
 setClock('.timer', deadline);
 
+//! Modal wondow 
+const btnsModal = document.querySelectorAll('[data-modal]'),
+      closeModal = document.querySelector('[data-close]'),
+      modal = document.querySelector('.modal');
+
+btnsModal.forEach(btn => {
+    btn.addEventListener('click', () => {
+        modal.classList.toggle('show');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+function closeModals() {
+    modal.classList.toggle('show');
+    document.body.style.overflow = '';
+}
+closeModal.addEventListener('click', closeModals);
+
+modal.addEventListener('click', (e) => {
+    if (e.target.matches('.modal')) {
+        closeModals();
+    }
+});
+
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeModals();
+    }
+});
+
+
+
+
+
+
+
+
 
 });
