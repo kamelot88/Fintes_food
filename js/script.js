@@ -80,7 +80,7 @@ function setClock(selector, endtime) {
           seconds = timer.querySelector('#seconds'),
           timeinterval = setInterval(updateClock, 1000);
 
-updateClock();
+    updateClock();
 
     function updateClock() {
         const t = getTimeRemaining(endtime);
@@ -102,11 +102,14 @@ const btnsModal = document.querySelectorAll('[data-modal]'),
       modal = document.querySelector('.modal');
 
 btnsModal.forEach(btn => {
-    btn.addEventListener('click', () => {
-        modal.classList.toggle('show');
-        document.body.style.overflow = 'hidden';
-    });
+    btn.addEventListener('click', openModal);
 });
+
+function openModal() {
+    modal.classList.toggle('show');
+    document.body.style.overflow = 'hidden';
+    clearInterval(modalTimerId);
+}
 
 function closeModals() {
     modal.classList.toggle('show');
@@ -127,8 +130,16 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+const modalTimerId = setTimeout(openModal, 6000);
 
+function showModalScroll() {
+    if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+        openModal();
+        window.removeEventListener('scroll', showModalScroll);
+    }
+}
 
+window.addEventListener('scroll', showModalScroll);
 
 
 
